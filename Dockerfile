@@ -1,12 +1,15 @@
 FROM python:3.6.3-alpine3.6
 
 # Get latest root certificates
-RUN apk add --update ca-certificates && update-ca-certificates
+RUN apk add --no-cache \
+    ca-certificates \
+    git \
+    && update-ca-certificates
 
 # Install the required packages
 RUN pip install \
     'redis==2.10.6' \
-    'flower==0.9.2'
+    'git+https://github.com/OvalMoney/flower.git@1.0'
 
 # PYTHONUNBUFFERED: Force stdin, stdout and stderr to be totally unbuffered. (equivalent to `python -u`)
 # PYTHONHASHSEED: Enable hash randomization (equivalent to `python -R`)
